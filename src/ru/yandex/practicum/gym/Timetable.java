@@ -1,6 +1,5 @@
 package ru.yandex.practicum.gym;
 
-import java.sql.Time;
 import java.util.*;
 
 public class Timetable {
@@ -51,7 +50,7 @@ public class Timetable {
         return new ArrayList<>();
     }
 
-    public HashMap<Coach, Integer> getCountByCoaches () {
+    public List<CounterOfTrainings> getCountByCoaches () {
         HashMap<Coach, Integer> counters = new HashMap<>();
 
         for (DayOfWeek day : timetable.keySet()) {
@@ -69,6 +68,20 @@ public class Timetable {
                 }
             }
         }
-        return counters;
+
+        List<CounterOfTrainings> result = new ArrayList<>();
+        for (Map.Entry<Coach, Integer> coach : counters.entrySet()) {
+            result.add(new CounterOfTrainings(coach.getKey(), coach.getValue()));
+        }
+
+        Comparator<CounterOfTrainings> counterOfTrainingsComparator = new Comparator<>() {
+            @Override
+            public int compare(CounterOfTrainings o1, CounterOfTrainings o2) {
+                return o2.getCountOfTrainings() - o1.getCountOfTrainings();
+            }
+        };
+
+        result.sort(counterOfTrainingsComparator);
+        return result;
     }
 }
