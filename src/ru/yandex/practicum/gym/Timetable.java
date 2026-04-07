@@ -6,7 +6,7 @@ public class Timetable {
     private final Comparator<TimeOfDay> timeComparator = new Comparator<>() {
         @Override
         public int compare(TimeOfDay o1, TimeOfDay o2) {
-            if (o1.getHours()==o2.getHours()) {
+            if (o1.getHours() == o2.getHours()) {
                 return o1.getMinutes() - o2.getMinutes();
             } else return o1.getHours() - o2.getHours();
         }
@@ -31,7 +31,7 @@ public class Timetable {
         List<TrainingSession> sessions = new ArrayList<>();
 
         TreeMap<TimeOfDay, List<TrainingSession>> dayMap = timetable.get(dayOfWeek);
-        if (dayMap == null ) return sessions;
+        if (dayMap == null) return sessions;
 
         for (TimeOfDay time : dayMap.navigableKeySet()) {
             sessions.addAll(dayMap.get(time));
@@ -50,7 +50,7 @@ public class Timetable {
         return new ArrayList<>();
     }
 
-    public List<CounterOfTrainings> getCountByCoaches () {
+    public List<CounterOfTrainings> getCountByCoaches() {
         HashMap<Coach, Integer> counters = new HashMap<>();
 
         for (DayOfWeek day : timetable.keySet()) {
@@ -58,7 +58,7 @@ public class Timetable {
 
             for (List<TrainingSession> sessionsList : dayMap.values()) {
 
-                for (TrainingSession session : sessionsList ) {
+                for (TrainingSession session : sessionsList) {
                     Coach coach = session.getCoach();
                     if (counters.containsKey(coach)) {
                         counters.put(coach, counters.get(coach) + 1);
