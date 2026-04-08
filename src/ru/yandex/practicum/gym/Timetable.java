@@ -3,16 +3,7 @@ package ru.yandex.practicum.gym;
 import java.util.*;
 
 public class Timetable {
-    private final Comparator<TimeOfDay> timeComparator = new Comparator<>() {
-        @Override
-        public int compare(TimeOfDay o1, TimeOfDay o2) {
-            if (o1.getHours() == o2.getHours()) {
-                return o1.getMinutes() - o2.getMinutes();
-            } else return o1.getHours() - o2.getHours();
-        }
-    };
-
-    private HashMap<DayOfWeek, TreeMap<TimeOfDay, List<TrainingSession>>> timetable;
+    private Map<DayOfWeek, TreeMap<TimeOfDay, List<TrainingSession>>> timetable;
 
     public Timetable() {
         timetable = new HashMap<>();
@@ -22,7 +13,7 @@ public class Timetable {
         DayOfWeek day = trainingSession.getDayOfWeek();
         TimeOfDay timeTraining = trainingSession.getTimeOfDay();
 
-        TreeMap<TimeOfDay, List<TrainingSession>> dayMap = timetable.computeIfAbsent(day, k -> new TreeMap<>(timeComparator));
+        TreeMap<TimeOfDay, List<TrainingSession>> dayMap = timetable.computeIfAbsent(day, k -> new TreeMap<>());
         List<TrainingSession> sessions = dayMap.computeIfAbsent(timeTraining, k -> new ArrayList<>());
         sessions.add(trainingSession);
     }
